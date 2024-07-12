@@ -1,6 +1,4 @@
 ﻿using Bankomat.BancomatServise;
-using System;
-using System.Transactions;
 namespace Bankomat
 {
     public class Program
@@ -10,5 +8,9 @@ namespace Bankomat
             BancomatService serviselar = new BancomatService();
             serviselar.UsingBancomat();
         }
+    }
+    abstract class Loger
+    {
+        internal abstract void LogInformation();
     }
 }

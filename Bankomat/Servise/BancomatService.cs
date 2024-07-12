@@ -1,40 +1,41 @@
-﻿namespace Bankomat.BancomatServise;
-using Bankomat.Models;
+﻿using Bankomat.Models;
 using System;
+namespace Bankomat.BancomatServise;
 
-internal class BancomatService
+class BancomatService : Loger
 {
     private static object usersCard;
 
     public void UsingBancomat()
     {
         Model usersCard = new Model();
-        static void usingBancomat()
+    }
+
+    private static void usingBancomat()
+    {
+
+        string userCoise;
+        do
         {
 
-            string userCoise;
-            do
+            int myBalance = 100;
+            Console.WriteLine($"Hush kelibsiz!  Hisobingizdagi mablag': {myBalance}$");
+            Console.WriteLine("choose the operation: \n1=>Take cash money \n2=> Activate sms notification function \n3=> Transactions \n4=> Quit ");
+            int userChoiseOperation = Convert.ToInt32(Console.ReadLine());
+            switch (userChoiseOperation)
             {
+                case 1: TakeCash(); break;
+                case 2: ActivateSms(); break;
+                case 3: Transactions(); break;
+                case 4: Quite(); break;
 
-                int myBalance = 100;
-                Console.WriteLine($"Hush kelibsiz!  Hisobingizdagi mablag': {myBalance}$");
-                Console.WriteLine("choose the operation: \n1=>Take cash money \n2=> Activate sms notification function \n3=> Transactions \n4=> Quit ");
-                int userChoiseOperation = Convert.ToInt32(Console.ReadLine());
-                switch (userChoiseOperation)
-                {
-                    case 1: TakeCash(); break;
-                    case 2: ActivateSms(); break;
-                    case 3: Transactions(); break;
-                    case 4: Quite(); break;
+                default: Console.WriteLine("Please enter the numbers from 1 to 4"); break;
 
-                    default: Console.WriteLine("Please enter the numbers from 1 to 4"); break;
-
-                }
-                Console.WriteLine("if you want to continue press +");
-                userCoise = Console.ReadLine();
             }
-            while (userCoise is "+");
+            Console.WriteLine("if you want to continue press +");
+            userCoise = Console.ReadLine();
         }
+        while (userCoise is "+");
     }
 
     private static void Quite()
@@ -65,23 +66,24 @@ internal class BancomatService
     {
         Console.Write("Enter resivers card number: ");
         string inputCardNumber = Console.ReadLine();
-        int usersCardNumber1 = Convert.ToInt32(inputCardNumber);
-        int usersCardNumber2 = Convert.ToInt32(Console.ReadLine());
-        int usersCardNumber3 = Convert.ToInt32(Console.ReadLine());
-        int usersCardNumber4 = Convert.ToInt32(Console.ReadLine());
-        if (1000 >= usersCardNumber1, usersCardNumber2, usersCardNumber3, usersCardNumber4 <= 9999)
+        decimal usersCardNumber = decimal.Parse(inputCardNumber);
+        
+        if (1000 < usersCardNumber && usersCardNumber < 9999)
         {
-            Console.WriteLine($"{usersCardNumber1} \t{usersCardNumber2} \t{usersCardNumber3} \t{usersCardNumber4}");
+            Console.WriteLine(usersCardNumber);
         }
         else
+        {
+            Console.WriteLine("Invalit number, try again");
         }
+        
     }
 
     private static void TakeCash()
     {
         Console.WriteLine("Enter password");
-        string inputPassword = Console.ReadLine();
-        if (inputPassword is usersCard.CardPassword && inputPassword != null)
+        int inputPassword = int.Parse(Console.ReadLine());
+        if (inputPassword is usersCard.LoginService && inputPassword != null)
         {
 
             Console.WriteLine("\n1=> 10$ 2=>\n20$ 3=>50$ \n4=> another amount ");
@@ -120,6 +122,11 @@ internal class BancomatService
 
             }
         }
+    }
+
+    internal override void LogInformation()
+    {
+        throw new NotImplementedException();
     }
 }
 
